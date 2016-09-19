@@ -107,6 +107,7 @@ MediaUploader.prototype.upload = function() {
   var self = this;
   var xhr = new XMLHttpRequest();
 
+   console.log("upload, xhr.open, " + this.url)
   xhr.open(this.httpMethod, this.url, true);
   xhr.setRequestHeader('Authorization', 'Bearer ' + this.token);
   xhr.setRequestHeader('Content-Type', 'application/json');
@@ -117,6 +118,7 @@ MediaUploader.prototype.upload = function() {
     if (e.target.status < 400) {
       var location = e.target.getResponseHeader('Location');
       this.url = location;
+       console.log("upload, xhr.onload, " + this.url)
       this.sendFile_();
     } else {
       this.onUploadError_(e);
@@ -144,6 +146,7 @@ MediaUploader.prototype.sendFile_ = function() {
   }
 
   var xhr = new XMLHttpRequest();
+  console.log("sendFile_() , " + this.url)
   xhr.open('PUT', this.url, true);
   xhr.setRequestHeader('Content-Type', this.contentType);
   xhr.setRequestHeader('Content-Range', "bytes " + this.offset + "-" + (end - 1) + "/" + this.file.size);
